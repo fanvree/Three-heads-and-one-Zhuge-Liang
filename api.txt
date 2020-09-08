@@ -1,0 +1,242 @@
+学院平台助理(超级管理员)：
+
+1.1、查询用户信息：
+Method:GET
+URL：/boss/user/list
+QueryParam:
+{
+	'username': name(default '')
+	'page': 1
+	'size': 20
+}
+Response:
+{
+	'total':101,
+	'userlist':
+	[
+		{
+			'userid': '101' //唯一id
+			'username': 'fzr18',
+			'identity': 'normal'/'renter'/'admin',
+			'email': '12306@qq.com'
+			'password': 'md5'
+		},
+	]
+}
+
+1.2、删除用户：
+Method:GET
+URL：/boss/user/delete
+QueryParam:
+{
+	'userid':'101'
+}
+Response:{}
+
+1.3、设置用户类型：
+Method:GET
+URL：/boss/user/set
+QueryParam:
+{
+	'username': name,
+	'identity': 'normal'/'renter'/'admin',
+}
+Response:{}
+
+2.1查看所有设备：
+Method:GET
+URL：/boss/device/list
+QueryParam:
+{
+	'page': 1
+	'size': 20
+	'valid':0/已经上架 1/未审核 2/未上架 
+	'deviceid': '101' //设备标识符
+	'devicename': '设备名称' //可选
+}
+Response:
+{
+	'total':'101',
+	'devicelist':[
+	{
+		'deviceid': '1' //设备唯一标识id
+		'devicename': '自动机',
+		'owner': 'fzr18',
+		'phone': '188888888888'//owner's phone
+		'user': 'yxr18',
+		'rentout': 'True'/'False',
+		'start': '2018年1月1日',  //借用开始时间
+		'due': '2018年1月1日',  //借用结束时间
+		'location': '东主楼',
+		'addtion': '备注'
+		'vaild'： 0/已经上架 1/未审核 2/未上架 
+		'reason': '上架理由'
+	}
+	]
+}
+
+2.2修改设备信息：
+Method:GET
+URL：/boss/device/change
+QueryParam:
+{
+	'deviceid': '1' //设备唯一标识id
+	'devicename': '自动机',
+	'owner': 'fzr18',
+	'phone': '188888888888'
+	'user': 'yxr18',
+	'rentout': 'True'/'False',
+	'start': '2018年1月1日',  //借用开始时间
+	'due': '2018年1月1日',  //借用结束时间
+	'location': '东主楼',
+	'addtion': '备注',
+	'vaild'： 0/已经上架 1/未审核 2/未上架 
+	'reason': '上架理由'
+}
+Response:
+{}
+
+
+2.3删除设备：
+Method:GET
+URL：/boss/device/delete
+QueryParam:
+{
+	'deviceid': '1' 
+}
+Response:{}
+
+
+3.1查看租借申请：
+Method:GET
+URL：/boss/order/list
+QueryParam:
+{
+	'page': 1
+	'size': 20
+}
+Response:
+{
+	'total':'101',
+	'orderlist':[
+	{
+		'orderid': '1' //申请唯一标识id
+		'devicename': '自动机',
+		'owner': 'fzr18',
+		'applicant': 'yxr18',
+		'start':'2018年1月1日',
+		'due': '2018年1月1日',  //借用结束时间
+		'location': '东主楼',
+		'addtion': '备注',
+		'state': 0/审核通过 1/未审核 2/审核未通过 
+	}
+	]
+}
+
+3.2租借审批申请:
+Method:GET
+URL：/boss/order/state
+QueryParam:
+{
+	'orderid': '1',
+	'state': 0/审核通过 1/未审核 2/审核未通过
+}
+Response:{}
+
+3.3删除租借申请：
+Method:GET
+URL：/boss/order/delete
+QueryParam:
+{
+	'orderid': '1',
+}
+Response:{}
+
+4、用户注册：
+先不写
+
+5、用户申请成为设备提供者列表查看：
+Method:GET
+URL：/boss/offer
+QueryParam:{}
+Response:
+{
+	offer:[
+	{
+		'userid': '101',
+		'reason': 'reason',
+	}
+	]
+}
+
+6、上架设备审核
+通过2筛选未上架和未审核设备
+
+7、统计信息？再说吧
+
+
+
+
+
+
+
+学院师生：
+1.1发送邮件：
+Method:GET//后台存储email<->验证码关系
+URL：/logon
+QueryParam:{
+	'email':'12306@qq.com'
+}
+Response:
+{
+	'state': 'email已经发送'/'email发送失败，请检查格式'
+}
+
+1.2提交注册内容：
+Method:GET
+URL：/logon
+QueryParam:{
+	'username':'fzr18'
+	'email':'12306@qq.com'
+	'code':'yanzhengma'
+	'password':'12306'
+}
+Response:
+{
+	'state': '注册成功'/'注册失败'
+}
+
+1.3登录：
+Method:GET
+URL：/logon
+QueryParam:{
+	'username':'fzr18'
+	'password':'12306'
+}
+Response:
+{
+	'token': 'token'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
