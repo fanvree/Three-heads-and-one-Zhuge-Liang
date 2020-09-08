@@ -5,7 +5,7 @@ Method:GET
 URL：/boss/user/list
 QueryParam:
 {
-	'username': name(default '')
+	'username': name(default ='')
 	'page': 1
 	'size': 20
 }
@@ -25,25 +25,25 @@ Response:
 }
 
 1.2、删除用户：
-Method:GET
+Method: POST
 URL：/boss/user/delete
-QueryParam:
+Request:
 {
 	'userid':'101'
 }
 Response:{}
 
 1.3、设置用户类型：
-Method:GET
+Method:POST
 URL：/boss/user/set
-QueryParam:
+Request:
 {
 	'username': name,
 	'identity': 'normal'/'renter'/'admin',
 }
 Response:{}
 
-2.1查看所有设备：
+2.1 查看所有设备：
 Method:GET
 URL：/boss/device/list
 QueryParam:
@@ -75,10 +75,10 @@ Response:
 	]
 }
 
-2.2修改设备信息：
-Method:GET
-URL：/boss/device/change
-QueryParam:
+2.2 修改设备信息：
+Method: POST
+URL: /boss/device/change
+Request:
 {
 	'deviceid': '1' //设备唯一标识id
 	'devicename': '自动机',
@@ -97,17 +97,16 @@ Response:
 {}
 
 
-2.3删除设备：
-Method:GET
+2.3 删除设备：
+Method:POST
 URL：/boss/device/delete
-QueryParam:
+Request:
 {
 	'deviceid': '1' 
 }
 Response:{}
 
-
-3.1查看租借申请：
+3.1 查看租借申请：
 Method:GET
 URL：/boss/order/list
 QueryParam:
@@ -133,7 +132,7 @@ Response:
 	]
 }
 
-3.2租借审批申请:
+3.2 租借审批申请:
 Method:GET
 URL：/boss/order/state
 QueryParam:
@@ -143,38 +142,57 @@ QueryParam:
 }
 Response:{}
 
-3.3删除租借申请：
-Method:GET
+3.3 删除租借申请：
+Method:POST
 URL：/boss/order/delete
-QueryParam:
+Request:
 {
 	'orderid': '1',
 }
 Response:{}
 
 4、用户注册：
-先不写
 
 5、用户申请成为设备提供者列表查看：
-Method:GET
+Method:POST
 URL：/boss/offer
-QueryParam:{}
+Request:
+{
+	'userid': '101',
+	'labinfo': '',
+	'reason': '',
+}
 Response:
 {
-	offer:[
-	{
-		'userid': '101',
-		'reason': 'reason',
-	}
-	]
+	# offer:[
+	# {
+	# 	'userid': '101',
+	# 	'reason': 'reason',
+	# }
+	# ]
 }
 
 6、上架设备审核
-通过2筛选未上架和未审核设备
-
+通过2筛选未上架和未审核设备，admin在其页面提交是否通过审核
+Method:POST
+URL: /boss/device/audit
+Request:{
+	'audit': True/False,
+	'commit': ''# 具体回复
+}
+Response:{}
 7、统计信息？再说吧
-
-
+Method:GET
+URL: /boss/device/filter
+QueryParam:
+{
+	'available': True/False,	# 目前可用的 false表示filter不包含该选项
+	'unavailable': True/False,	# 目前被占用的
+	'devicename': '',
+	'owner':'',
+	'applicant':'',
+}
+Response:{}
 
 
 
@@ -193,9 +211,9 @@ Response:
 }
 
 1.2提交注册内容：
-Method:GET
+Method:POST
 URL：/logon
-QueryParam:{
+Request:{
 	'username':'fzr18'
 	'email':'12306@qq.com'
 	'code':'yanzhengma'
@@ -207,9 +225,9 @@ Response:
 }
 
 1.3登录：
-Method:GET
-URL：/logon
-QueryParam:{
+Method:POST
+URL：/login
+Request:{
 	'username':'fzr18'
 	'password':'12306'
 }
@@ -301,7 +319,7 @@ Response:
 		'owner': 'fzr18',
 		'applicant': 'yxr18',
 		'start':'2018年1月1日',
-		'due': '2018年1月1日',  //借用结束时间
+		'due': '2018年1月1日',  //借用结束时间，前端对即将到期的设备给出提示
 		'location': '东主楼',
 		'addtion': '备注',
 	}
@@ -323,6 +341,8 @@ Response:
 以收到审核结果；
 4需要平台支持管理所有已借出设备历史信息，包括查看已借出的设备信
 息、设备的归还情况等，同时对归还的设备进行确认归还操作等等。
+
+
 
 
 
